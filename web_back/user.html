@@ -86,5 +86,16 @@
                 $('.user_pic').attr('src', backData.data.user_pic);
             }
         });
+
+
+        $('#exampleInputFile').change(function () {
+            //files属性是DOM的，所以this不要加$
+            // console.log(this.files);
+
+            var url = URL.createObjectURL(this.files[0]);
+
+            $('.user_pic').attr('src', url);
+
+        });
     });
 </script>
