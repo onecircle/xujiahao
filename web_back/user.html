@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="css/main.css">
     <script src="js/jquery-1.12.4.min.js"></script>
 
+    <style>
+        img {
+            vertical-align: top;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -43,8 +49,13 @@
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">用户图标：</label>
                     <div class="col-sm-10">
-                        <img src="images/2.jpg" alt="" class="user_pic">
-                        <input type="file" id="exampleInputFile" name='user_pic'>
+                        <label for="exampleInputFile">
+                            <img src="./images/upload_pic.png" alt="" class="user_pic_show"
+                                style="width: 100px; height:100px">
+                        </label>
+                        <img src="./images/2.jpg" alt="" class="user_pic">
+
+                        <input type="file" id="exampleInputFile" name='user_pic' style="opacity: 0">
                     </div>
                 </div>
 
@@ -116,6 +127,7 @@
             //files属性是DOM的，所以this不要加$
             // console.log(this.files);
 
+            // var icon = this.files[0];
             var url = URL.createObjectURL(this.files[0]);
 
             $('.user_pic').attr('src', url);
