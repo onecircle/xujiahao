@@ -140,7 +140,7 @@
         <td class="text-center">
             <a href="javascript:editTr({&quot;id&quot;:&quot;1&quot;,&quot;slug&quot;:&quot;uncategorized&quot;,&quot;name&quot;:&quot;未分类&quot;});"
                 class="btn btn-info btn-xs">编辑</a>
-            <a href="javascript:deleteTr( 1 );" class="btn btn-danger btn-xs">删除</a>
+            <a href="javascript:deleteTr({{$value.id}});" class="btn btn-danger btn-xs">删除</a>
         </td>
     </tr>
     {{/each}}
@@ -148,6 +148,8 @@
 
 <script>
     $(function () {
+
+        //封装的函数：从服务器获取文章分类数据，加载到页面上
         function getcate() {
             $.ajax({
                 url: ' http://localhost:8000/admin/category_search',
@@ -189,6 +191,34 @@
 
             });
         });
+
+
+
+        //文章类别删除功能
+
+        //获取到id,调用接口，删除文章分类
+        window.deleteTr = function (id) {
+            // console.log(id);
+
+            //id当做对象传入
+            $.ajax({
+                url: 'http://localhost:8000/admin/category_delete',
+                type: 'post',
+                // 用key=value形式，不要有空格
+                // data: "id=" + id,
+                data: {
+                    id: id
+                },
+                success: function (backData) {
+                    console.log(backData);
+
+                    if (backData.code == 200) {
+                        getcate();
+                    }
+                }
+            });
+        };
+
 
     });
 </script>
