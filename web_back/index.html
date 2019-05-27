@@ -146,7 +146,7 @@
 
         //页面一打开就去获取登录的用户信息
         $.ajax({
-            url: 'https://autumnfish.cn/big32/admin/getuser',
+            url: ' http://localhost:8000/admin/getuser',
             type: 'get',
             success: function (backData) {
                 console.log(backData);
@@ -169,7 +169,7 @@
 
             //退出也需要调用ajax接口
             $.ajax({
-                url: 'https://autumnfish.cn/big/admin/logout',
+                url: ' http://localhost:8000/admin/logout',
                 type: 'post',
                 success: function (backData) {
                     // console.log(backData);

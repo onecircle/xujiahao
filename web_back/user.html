@@ -107,7 +107,7 @@
 <script>
     $(function () {
         $.ajax({
-            url: 'https://autumnfish.cn/big32/admin/userinfo_get',
+            url: ' http://localhost:8000/admin/userinfo_get',
             type: 'get',
             success: function (backData) {
                 // console.log(backData);
@@ -141,7 +141,7 @@
             var formdata = new FormData($('.article_form')[0]);
 
             $.ajax({
-                url: 'https://autumnfish.cn/big32/admin/userinfo_edit',
+                url: ' http://localhost:8000/admin/userinfo_edit',
                 type: 'post',
                 data: formdata,
                 contentType: false,
