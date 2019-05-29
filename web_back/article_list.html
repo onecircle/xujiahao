@@ -334,6 +334,14 @@
 
                     var lists = template('lists', backData);
                     $('.my-tbody').html(lists);
+
+                    var totalPages = backData.totalPage;
+                    var currentPage = $pagination.twbsPagination('getCurrentPage');
+                    $pagination.twbsPagination('destroy');
+                    $pagination.twbsPagination($.extend({}, defaultOpts, {
+                        startPage: currentPage,
+                        totalPages: totalPages
+                    }));
                 }
             });
         }
@@ -341,8 +349,11 @@
         //页面一打开先获取到所有文章
         getArticle();
 
+
+
         //分页插件
-        $('.pagination').twbsPagination({
+        var $pagination = $('selector');
+        var defaultOpts = {
             totalPages: 20,
             visiblePages: 5,
             first: '第一页',
@@ -358,7 +369,10 @@
                 myPage = page;
                 getArticle();
             }
-        });
+        };
+        $pagination.twbsPagination(defaultOpts);
+
+
 
 
         //筛选功能
