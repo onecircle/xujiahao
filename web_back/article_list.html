@@ -304,57 +304,15 @@
 <script>
     $(function () {
 
-        //获取文章列表所有分类
-        $.ajax({
-            url: 'http://localhost:8000/admin/category_search',
-            success: function (backData) {
-                // console.log(backData);
-
-                var options = template('cate', backData);
-                $('#selCategory').append(options);
-            }
-        });
-
-
         //获取所有文章
         var myPage = 1;
 
-        //将获取文章接口封装成函数
-        function getArticle() {
-            $.ajax({
-                url: 'http://localhost:8000/admin/search',
-                data: {
-                    page: myPage,
-                    perpage: 10,
-                    type: $('#selCategory').val(),
-                    state: $('#selStatus').val()
-                },
-                success: function (backData) {
-                    // console.log(backData);
-
-                    var lists = template('lists', backData);
-                    $('.my-tbody').html(lists);
-
-                    var totalPages = backData.totalPage;
-                    var currentPage = $pagination.twbsPagination('getCurrentPage');
-                    $pagination.twbsPagination('destroy');
-                    $pagination.twbsPagination($.extend({}, defaultOpts, {
-                        startPage: currentPage,
-                        totalPages: totalPages
-                    }));
-                }
-            });
-        }
-
-        //页面一打开先获取到所有文章
-        getArticle();
-
-
+        var myTotalPage = 10;
 
         //分页插件
-        var $pagination = $('selector');
+        var $pagination = $('.pagination');
         var defaultOpts = {
-            totalPages: 20,
+            totalPages: myTotalPage,
             visiblePages: 5,
             first: '第一页',
             prev: '上一页',
@@ -373,14 +331,60 @@
         $pagination.twbsPagination(defaultOpts);
 
 
+        //将获取文章接口封装成函数
+        function getArticle() {
+            $.ajax({
+                url: 'http://localhost:8000/admin/search',
+                data: {
+                    page: myPage,
+                    perpage: 10,
+                    type: $('#selCategory').val(),
+                    state: $('#selStatus').val()
+                },
+                success: function (backData) {
+                    // console.log(backData);
+
+                    var lists = template('lists', backData);
+                    $('.my-tbody').html(lists);
+
+                    var totalPages = backData.totalPage;
+                    if (myTotalPage != totalPages) {
+                        myTotalPage = totalPages;
+                        $pagination.twbsPagination('destroy');
+                        $pagination.twbsPagination($.extend({}, defaultOpts, {
+                            startPage: 1,
+                            totalPages: totalPages
+                        }));
+                    }
+
+                }
+            });
+        }
+
+
+
+        //页面一打开先获取到所有文章
+        getArticle();
+
+
+        //获取文章列表所有分类
+        $.ajax({
+            url: 'http://localhost:8000/admin/category_search',
+            success: function (backData) {
+                // console.log(backData);
+
+                var options = template('cate', backData);
+                $('#selCategory').append(options);
+            }
+        });
+
 
 
         //筛选功能
         $('#btnSearch').click((e) => {
             e.preventDefault();
 
-            // myPage = 1;
-            getArticle(1);
+            getArticle();
         });
 
 
